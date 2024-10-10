@@ -10,12 +10,13 @@ def read_excel(files_folder):
     return dataframes_list
 def combined_excel(dataframes_list):
     return reduce(DataFrame.union,dataframes_list)
-def create_table(files_folder,output_table):
+def create_table(files_folder,output_filepath):
     dataframe_list= read_excel(files_folder)
     combined_df=combined_excel(dataframe_list)
-    combined_df.write.format("delta").mode("overwrite").saveAsTable(output_table)
+    combined_df.write.format("csv").mode("append").save("output_filepath")
 
 if __name__ == "__main__":
     files_folder=input("Enter excel files folder : ")
-    catalog_schema_table=input("Enter table name along with catalog schema table")
-    create_table(files_folder,catalog_schema_table)
+    output_filepath=input("Enter table name along with catalog schema table")
+    finale_output_filepath=input("Enter final file path")
+    create_table(files_folder,output_filepath)
